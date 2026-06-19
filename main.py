@@ -4,6 +4,7 @@ from classes import ajouter_classe, lister_classes, assigner_titulaire, lister_c
 from enseignants import ajouter_enseignant, lister_enseignants
 from absences import ajouter_absence, lister_absence
 from sanctions import ajouter_sanction, lister_sanction
+from finances import ajouter_frais, ajouter_paiement, voir_situation_financiere
 
 while True:
     print("1. Ajouter un élève")
@@ -24,6 +25,9 @@ while True:
     print("16. Lister les absences d'un élève")
     print("17. Ajouter une sanction")
     print("18. Lister les sanctions d'un élève")
+    print("19. Ajouter les frais de scolarité")
+    print("20. Paiement")
+    print("21. Voir la situation financière : ")
     print(".. Quitter")
     choix = input("Votre choix : ")
 
@@ -91,5 +95,17 @@ while True:
     elif choix == "18":
         eleve_id = int(input("ID de l'élève : "))
         lister_sanction(eleve_id)
+    elif choix == "19":
+        eleve_id = int(input("ID de l'élève : "))
+        montant_total = float(input("Montant total : "))
+        annee_scolaire = input("Année scolaire : ")
+        ajouter_frais(eleve_id, montant_total, annee_scolaire)
+    elif choix == "20":
+        frais_id = int(input("Frais ID : "))
+        montant_paye = float(input("Montant à payé : "))
+        date_paiement = input("Payé le : ")
+        ajouter_paiement(frais_id, montant_paye, date_paiement)
+    elif choix == "21":
+        voir_situation_financiere(eleve_id)
     elif choix == ".":
         break

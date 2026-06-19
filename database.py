@@ -70,3 +70,24 @@ curseur.execute("""
     )
 """)
 connexion.commit()
+
+curseur.execute("""
+    CREATE TABLE IF NOT EXISTS frais_scolarite (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        eleve_id INTEGER,
+        montant_total REAL,
+        annee_scolaire TEXT,
+        FOREIGN KEY (eleve_id) REFERENCES eleves (id)
+    )
+""")
+connexion.commit()
+
+curseur.execute("""
+    CREATE TABLE IF NOT EXISTS paiements(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        frais_id INTEGER,
+        montant_paye REAL,
+        date_paiement TEXT,
+        FOREIGN KEY (frais_id) REFERENCES frais_scolarite (id)
+    )
+""")
