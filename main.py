@@ -5,6 +5,8 @@ from enseignants import ajouter_enseignant, lister_enseignants
 from absences import ajouter_absence, lister_absence
 from sanctions import ajouter_sanction, lister_sanction
 from finances import ajouter_frais, ajouter_paiement, voir_situation_financiere
+from bulletin import generer_bulletin, moyenne_matiere
+from statistiques import moyenne_classe
 
 while True:
     print("1. Ajouter un élève")
@@ -27,7 +29,10 @@ while True:
     print("18. Lister les sanctions d'un élève")
     print("19. Ajouter les frais de scolarité")
     print("20. Paiement")
-    print("21. Voir la situation financière : ")
+    print("21. Voir la situation financière")
+    print("22. Générer le bulletin de l'élève")
+    print("23. Moyenne de la Classe")
+    print("24. Moyenne des Matiere")
     print(".. Quitter")
     choix = input("Votre choix : ")
 
@@ -107,5 +112,14 @@ while True:
         ajouter_paiement(frais_id, montant_paye, date_paiement)
     elif choix == "21":
         voir_situation_financiere(eleve_id)
+    elif choix == "22":
+        eleve_id = int(input("ID de l'élève : "))
+        generer_bulletin(eleve_id)
+    elif choix == "23":
+        classe_id = int(input("ID de la classe : "))
+        moyenne_classe(classe_id)
+    elif choix == "24":
+        matiere = input("Saisir la matière : ")
+        moyenne_matiere(matiere)
     elif choix == ".":
         break
