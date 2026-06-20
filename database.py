@@ -91,3 +91,14 @@ curseur.execute("""
         FOREIGN KEY (frais_id) REFERENCES frais_scolarite (id)
     )
 """)
+connexion.commit()
+
+curseur.execute("""
+    CREATE TABLE IF NOT EXISTS utilisateurs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nom_utilisateur TEXT,
+        mot_de_passe TEXT,
+        role TEXT
+    )
+""")
+connexion.commit()
