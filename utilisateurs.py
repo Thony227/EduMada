@@ -12,7 +12,7 @@ def lister_utilisateur():
     for ligne in resultats:
         print(ligne)
 
-def connexion(nom_utilisateur, mot_de_passe):
+def connexion_login(nom_utilisateur, mot_de_passe):
     mdp_chiffre = hashlib.sha256(mot_de_passe.encode()).hexdigest()
     curseur.execute("SELECT role FROM utilisateurs WHERE nom_utilisateur = ? AND mot_de_passe = ?", (nom_utilisateur, mdp_chiffre))
     resultat = curseur.fetchone()

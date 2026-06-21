@@ -7,12 +7,12 @@ from sanctions import ajouter_sanction, lister_sanction
 from finances import ajouter_frais, ajouter_paiement, voir_situation_financiere
 from bulletin import generer_bulletin, moyenne_matiere
 from statistiques import moyenne_classe
-from utilisateurs import creer_compte, lister_utilisateur, connexion
+from utilisateurs import creer_compte, lister_utilisateur, connexion_login
 
 print("=== Connexion ===")
 nom_utilisateur = input("Veuillez saisir votre identifiant : ")
 mdp_chiffre = input("Veuillez saisir votre mot de passe : ")
-role_connecte = connexion(nom_utilisateur, mdp_chiffre)
+role_connecte = connexion_login(nom_utilisateur, mdp_chiffre)
 
 if role_connecte is None:
     exit()
@@ -152,7 +152,7 @@ while True:
         else:
             print("Accès refuser - Réservé au comptable")
     elif choix == "21":
-        if role_connecte == "comptable"
+        if role_connecte == "comptable":
             voir_situation_financiere(eleve_id)
         else:
             print("Accès refuser - Réservé au comptable")
@@ -171,6 +171,11 @@ while True:
             moyenne_matiere(matiere)
         else:
             print("Accès refuser - Réservé aux enseignants")
+    elif choix == "25":
+        nom_utilisateur = input("nom utilisateur : ")
+        mdp_chiffre = input("mot de passe : ")
+        role = input("role : ")
+        creer_compte(nom_utilisateur, mdp_chiffre, role)
     elif choix == "26":
         lister_utilisateur()
     elif choix == ".":

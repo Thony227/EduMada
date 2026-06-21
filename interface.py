@@ -1,6 +1,6 @@
 import tkinter as tk
 from database import connexion, curseur
-from utilisateurs import connexion
+from utilisateurs import connexion_login
 from classes import ajouter_classe
 from eleves import ajouter_eleve, lister_eleve
 
@@ -91,13 +91,13 @@ def ouvrir_fenetre_ajouter_eleve():
 
     def valider():
         nom_eleve = champ_nom_eleve.get()
-        age = champ_age_eleve.get()
-        classe_id = champ_classe_id.get()
+        age = int(champ_age_eleve.get())
+        classe_id = int(champ_classe_id.get())
         ajouter_eleve(nom_eleve, age, classe_id)
         fenetre_eleve.destroy()
 
     bouton_valider = tk.Button(fenetre_eleve, text="Valider", command=valider)
-    boutton_valider.pack()
+    bouton_valider.pack()
 
 def ouvrir_fenetre_lister_eleves():
     fenetre_liste = tk.Toplevel()
@@ -115,7 +115,7 @@ def ouvrir_fenetre_lister_eleves():
 def verifier_connexion():
     nom = champ_nom.get()
     mdp = champ_mdp.get()
-    role = connexion(nom, mdp)
+    role = connexion_login(nom, mdp)
 
     if role is None:
         label_message.config(text="Connexion échouée")
