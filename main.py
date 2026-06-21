@@ -73,10 +73,13 @@ while True:
         else:
             print("Accès refuser - Réservé au secretaire")
     elif choix == "5":
-        eleve_id = int(input("ID de l'élève : "))
-        matiere = input("Veuillez entrer la matière : ")
-        note = float(input("Veuillez entre la note : "))
-        ajouter_note(eleve_id, matiere, note)
+        if role_connecte == "enseignant":
+            eleve_id = int(input("ID de l'élève : "))
+            matiere = input("Veuillez entrer la matière : ")
+            note = float(input("Veuillez entre la note : "))
+            ajouter_note(eleve_id, matiere, note)
+        else:
+            print("Accès refuser - Réservé au enseignant")
     elif choix == "6":
         eleve_id = int(input("ID de l'élève : "))
         moyenne_eleve(eleve_id)

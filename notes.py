@@ -7,4 +7,4 @@ def ajouter_note(eleve_id, matiere, note):
 def moyenne_eleve(eleve_id):
     curseur.execute("SELECT AVG(note) FROM notes WHERE eleve_id = ?", (eleve_id,))
     resultat = curseur.fetchone()
-    print(f"Moyenne : {resultat[0]}")
+    return resultat[0]
