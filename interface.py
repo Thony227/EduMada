@@ -2,7 +2,7 @@ import tkinter as tk
 from database import connexion, curseur
 from utilisateurs import connexion_login
 from classes import ajouter_classe
-from eleves import ajouter_eleve, lister_eleve
+from eleves import ajouter_eleve, lister_eleve, modifier_eleve, supprimer_eleve
 
 fenetre = tk.Tk()
 fenetre.title("Edumada - Connexion")
@@ -39,6 +39,12 @@ def ouvrir_menu_principal(role):
     if role == "secretariat":
         bouton_eleve = tk.Button(menu, text="Ajouter un élève", command=ouvrir_fenetre_ajouter_eleve)
         bouton_eleve.pack()
+
+        bouton_modifier = tk.Button(menu, text="Modifier un élève", command=ouvvrir_fenetre_modifier_eleve)
+        bouton_modifier.pack()
+
+        bouton_supprimer = tk.Button(menu, text="Supprimer un élève", command=ouvrir_fenetre_supprimer_eleve)
+        bouton_supprimer.pack()
 
     bouton_liste = tk.Button(menu, text="Lister les élèves", command=ouvrir_fenetre_lister_eleves)
     bouton_liste.pack()
@@ -97,6 +103,60 @@ def ouvrir_fenetre_ajouter_eleve():
         fenetre_eleve.destroy()
 
     bouton_valider = tk.Button(fenetre_eleve, text="Valider", command=valider)
+    bouton_valider.pack()
+
+def ouvvrir_fenetre_modifier_eleve():
+    fenetre_modifier = tk.Toplevel()
+    fenetre_modifier.title("Modifier un élève")
+    fenetre_modifier.geometry("300x200")
+
+    label_eleve_id = tk.Label(fenetre_modifier, text="ID de l'eleve : ")
+    label_eleve_id.pack()
+    champ_eleve_id = tk.Entry(fenetre_modifier)
+    champ_eleve_id.pack()
+
+    label_nom = tk.Label(fenetre_modifier, text="Nom de l'élève : ")
+    label_nom.pack()
+    champ_nom_eleve = tk.Entry(fenetre_modifier)
+    champ_nom_eleve.pack()
+
+    label_age = tk.Label(fenetre_modifier, text="Age de l'élève : ")
+    label_age.pack()
+    champ_age_eleve = tk.Entry(fenetre_modifier)
+    champ_age_eleve.pack()
+
+    label_classe_id = tk.Label(fenetre_modifier, text="ID de la classe : ")
+    label_classe_id.pack()
+    champ_classe_id = tk.Entry(fenetre_modifier)
+    champ_classe_id.pack()
+
+    def valider():
+        eleve_id = int(champ_eleve_id.get())
+        nom_eleve = champ_nom_eleve.get()
+        age = int(champ_age_eleve.get())
+        classe_id = int(champ_classe_id.get())
+        modifier_eleve(eleve_id, nom_eleve, age, classe_id)
+        fenetre_modifier.destroy()
+
+    bouton_valider = tk.Button(fenetre_modifier, text="Valider", command=valider)
+    bouton_valider.pack()
+
+def ouvrir_fenetre_supprimer_eleve():
+    fenetre_supprimer = tk.Toplevel()
+    fenetre_supprimer.title("Supprimer un élève")
+    fenetre_supprimer.geometry("400x300")
+
+    Label_id_a_supprimer = tk.Label(fenetre_supprimer, text="ID de l'élève : ")
+    Label_id_a_supprimer.pack()
+    champ_id_a_supprimer = tk.Entry(fenetre_supprimer)
+    champ_id_a_supprimer.pack()
+
+    def valider():
+        id_a_supprimer = int(champ_id_a_supprimer.get())
+        supprimer_eleve(id_a_supprimer)
+        fenetre_supprimer.destroy()
+
+    bouton_valider = tk.Button(fenetre_supprimer, text="Valider", command=valider)
     bouton_valider.pack()
 
 def ouvrir_fenetre_lister_eleves():
