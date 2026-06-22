@@ -44,7 +44,7 @@ while True:
     print("24. Moyenne des Matiere")
     print("25. Creer un compte")
     print("26. Lister les utilisateurs")
-    print(".. Quitter")
+    print("27. Quitter")
     choix = input("Votre choix : ")
 
     if choix == "1":
@@ -115,7 +115,7 @@ while True:
     elif choix == "14":
         lister_eleves_avec_moyenne()
     elif choix == "15":
-        if role_connecte == "surveillant":
+        if role_connecte == "secretariat":
             eleve_id = int(input("ID de l'élève : "))
             date = input("Date (JJ/MM/AAAA) : ")
             type_absence = input("Type (absence/retard) : ")
