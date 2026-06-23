@@ -6,6 +6,7 @@ from eleves import ajouter_eleve, lister_eleve, modifier_eleve, supprimer_eleve
 from notes import ajouter_note, moyenne_eleve
 from enseignants import ajouter_enseignant, lister_enseignants
 from absences import ajouter_absence, lister_absence
+from sanctions import ajouter_sanction, lister_sanction
 
 COULEUR_FOND = "#2C3E50"
 COULEUR_TEXTE = "white"
@@ -39,7 +40,7 @@ label_message.pack(pady=5)
 def ouvrir_menu_principal(role):
     menu = tk.Tk()
     menu.title("EduMada - Menu Principal")
-    menu.geometry("620x450")
+    menu.geometry("720x550")
     menu.configure(bg=COULEUR_FOND)
 
     label_bienvenue = tk.Label(menu, text=f"Bienvenue ! Votre rôle : {role}", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
@@ -65,6 +66,8 @@ def ouvrir_menu_principal(role):
         bouton_absence = tk.Button(menu, text="Ajouter une absence", command=ouvrir_fenetre_ajouter_absence, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
         bouton_absence.pack(pady=10)
 
+        
+
     if role == "enseignant":
         bouton_note = tk.Button(menu, text="Ajouter une note", command=ouvrir_fenetre_ajouter_note, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
         bouton_note.pack(pady=10)
@@ -83,6 +86,12 @@ def ouvrir_menu_principal(role):
 
     bouton_liste_absence = tk.Button(menu, text="Liste des absences d'un élève", command=ouvrir_fenetre_lister_absence, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
     bouton_liste_absence.pack(pady=10)
+
+    bouton_sanction = tk.Button(menu, text="Ajouter une sanction", command=ouvrir_fenetre_ajouter_sanction, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
+    bouton_sanction.pack(pady=10)
+
+    bouton_liste_sanction = tk.Button(menu, text="Liste des sanctions d'un élève", command=ouvrir_fenetre_lister_sanction, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
+    bouton_liste_sanction.pack(pady=10)
 
     menu.mainloop()
 
@@ -218,13 +227,50 @@ def ouvrir_fenetre_ajouter_absence():
     bouton_valider = tk.Button(fenetre_absence, text="Valider", command=valider, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
     bouton_valider.pack(pady=10)
 
+def ouvrir_fenetre_ajouter_sanction():
+    fenetre_sanction = tk.Toplevel()
+    fenetre_sanction.title("Ajouter un sanction à un élève")
+    fenetre_sanction.geometry("620x450")
+    fenetre_sanction.configure(bg=COULEUR_FOND)
+
+    label_eleve_id = tk.Label(fenetre_sanction, text="ID de l'élève :", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
+    label_eleve_id.pack(pady=5)
+    champ_eleve_id = tk.Entry(fenetre_sanction)
+    champ_eleve_id.pack(pady=5)
+
+    label_date_sanction = tk.Label(fenetre_sanction, text="Date(JJ/MM/AAAA) :", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
+    label_date_sanction.pack(pady=5)
+    champ_date_sanction = tk.Entry(fenetre_sanction)
+    champ_date_sanction.pack(pady=5)
+
+    label_type_sanction = tk.Label(fenetre_sanction, text="Type de sanction :", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
+    label_type_sanction.pack(pady=5)
+    champ_type_sanction = tk.Entry(fenetre_sanction)
+    champ_type_sanction.pack(pady=5)
+
+    label_motif_sanction = tk.Label(fenetre_sanction, text="Motif de sanction :", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
+    label_motif_sanction.pack(pady=5)
+    champ_motif_sanction = tk.Entry(fenetre_sanction)
+    champ_motif_sanction.pack(pady=5)
+
+    def valider():
+        eleve_id = int(champ_eleve_id.get())
+        date = champ_date_sanction.get()
+        type_sanction = champ_type_sanction.get()
+        motif = champ_motif_sanction.get()
+        ajouter_sanction(eleve_id, date, type_sanction, motif)
+        fenetre_sanction.destroy()
+    
+    bouton_valider = tk.Button(fenetre_sanction, text="Valider", command=valider, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
+    bouton_valider.pack(pady=10)
+
 def ouvvrir_fenetre_modifier_eleve():
     fenetre_modifier = tk.Toplevel()
     fenetre_modifier.title("Modifier un élève")
     fenetre_modifier.geometry("620x450")
     fenetre_modifier.configure(bg=COULEUR_FOND)
 
-    label_eleve_id = tk.Label(fenetre_modifier, text="ID de l'eleve : ", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
+    label_eleve_id = tk.Label(fenetre_modifier, text="ID de l'élève : ", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
     label_eleve_id.pack(pady=5)
     champ_eleve_id = tk.Entry(fenetre_modifier)
     champ_eleve_id.pack(pady=5)
@@ -357,7 +403,7 @@ def ouvrir_fenetre_lister_enseignant():
 
 def ouvrir_fenetre_lister_absence():
     fenetre_absences = tk.Toplevel()
-    fenetre_absences.title("Absences/Retards de l'élève")
+    fenetre_absences.title("Absence(s)/Retard(s) de l'élève")
     fenetre_absences.geometry("620x450")
     fenetre_absences.configure(bg=COULEUR_FOND)
 
@@ -379,6 +425,31 @@ def ouvrir_fenetre_lister_absence():
             zone_liste_absence.insert(tk.END, f"{ligne[0]} | {ligne[1]} | justifié : {justifie}")
 
     bouton_afficher = tk.Button(fenetre_absences, text="Afficher", command=afficher, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE,font=POLICE_BOLD)
+    bouton_afficher.pack(pady=10)
+
+def ouvrir_fenetre_lister_sanction():
+    fenetre_sanctions = tk.Toplevel()
+    fenetre_sanctions.title("Sanction(s) de l'élève")
+    fenetre_sanctions.geometry("620x450")
+    fenetre_sanctions.configure(bg=COULEUR_FOND)
+
+    label_eleve_id = tk.Label(fenetre_sanctions, text="ID de l'élève :", bg=COULEUR_FOND, fg=COULEUR_TEXTE)
+    label_eleve_id.pack(pady=5)
+    champ_eleve_id =tk.Entry(fenetre_sanctions)
+    champ_eleve_id.pack(pady=10)
+
+    zone_liste_sanction = tk.Listbox(fenetre_sanctions, width=50)
+    zone_liste_sanction.pack(pady=10)
+
+    def afficher():
+        zone_liste_sanction.delete(0, tk.END)
+        eleve_id = int(champ_eleve_id.get())
+        curseur.execute("SELECT date, type, motif FROM sanctions WHERE eleve_id = ?",(eleve_id,))
+        resultats = curseur.fetchall()
+        for ligne in resultats:
+            zone_liste_sanction.insert(tk.END, f"{ligne[0]} | {ligne[1]} | {ligne[2]}")
+
+    bouton_afficher = tk.Button(fenetre_sanctions, text="Afficher", command=afficher, bg=COULEUR_BOUTON, fg=COULEUR_TEXTE, font=POLICE_BOLD)
     bouton_afficher.pack(pady=10)
 
 def verifier_connexion():
