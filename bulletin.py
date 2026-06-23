@@ -11,7 +11,8 @@ def generer_bulletin(eleve_id):
     for ligne in notes:
         print(f"{ligne[0]} : {ligne[1]}")
 
-    moyenne_eleve(eleve_id)
+    moyenne = moyenne_eleve(eleve_id)
+    print(f"Moyenne générale : {moyenne}")
 
 def moyenne_matiere(matiere):
     curseur.execute("SELECT matiere , AVG(note) FROM notes WHERE matiere = ? GROUP BY matiere", (matiere,))

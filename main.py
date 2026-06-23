@@ -139,7 +139,7 @@ while True:
         eleve_id = int(input("ID de l'élève : "))
         lister_sanction(eleve_id)
     elif choix == "19":
-        if role_connecte == "comptable":
+        if role_connecte == "directeur":
             eleve_id = int(input("ID de l'élève : "))
             montant_total = float(input("Montant total : "))
             annee_scolaire = input("Année scolaire : ")
@@ -147,7 +147,7 @@ while True:
         else:
             print("Accès refuser - Réservé au comptable")
     elif choix == "20":
-        if role_connecte == "comptable":
+        if role_connecte == "directeur":
             frais_id = int(input("Frais ID : "))
             montant_paye = float(input("Montant à payé : "))
             date_paiement = input("Payé le : ")
@@ -155,7 +155,7 @@ while True:
         else:
             print("Accès refuser - Réservé au comptable")
     elif choix == "21":
-        if role_connecte == "comptable":
+        if role_connecte == "directeur":
             voir_situation_financiere(eleve_id)
         else:
             print("Accès refuser - Réservé au comptable")
